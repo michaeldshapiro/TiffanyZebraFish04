@@ -1,0 +1,3 @@
+mt cutoff 10%
+adult feature cutoff 300
+others 600

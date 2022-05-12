@@ -1,5 +1,6 @@
 *~
+basement/
+data/
 SeuratObject/
-SeuratObject/*
-Integration/data/
-Integration/data/*
+intermediate/
+unintegrated/
