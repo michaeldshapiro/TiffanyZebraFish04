@@ -1,0 +1,27 @@
+
+- ZebraWare.R
+
+- IntegrationWare.R contains functions used to make and QC the objects
+    * makeSeuratObjectsFrom10X makes basic objects, collects basic QC
+    informationand saves unintegrated objects in unintegrated/
+    * plotTradeoffs looks at the results of choosing different count
+    cutoffs and mt cutoffs.  Saves the results in integrationFigures/
+    * performQC imposes nFeature and mt cutoffs and saves results in
+    unintegrated/ with the tag _qc
+    * makeLarvalObject merges the 2dpf and 3dpf objects, normalizes
+    and runs basic analyses and saves the result in
+    intermedieate/larval.rds 
+
+- CopyWare.R contains code to transfer information from old objects
+  into new by uniformizing orig.ident and giving each cell a tag
+  consisting of its barcode and orig.ident
+    * copyCellTypeIntoNewLarval This does what the name says and saves
+    the result in intermediate/larval_CellType.rds
+
+- makeLarvalQCFigures.R makes UMAPs of the old and new larval data
+  showing orig.ident and CellType and saves these in larvalQCFigures/
+
+- listLarvalCellTypes.R makes tables for the old and new larval
+  objects showing the name and count of each CellType
+
+

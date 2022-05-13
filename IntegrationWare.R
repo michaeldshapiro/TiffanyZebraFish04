@@ -275,4 +275,23 @@ makeLarvalObject = function()
     saveRDS(larval,'intermediate/larval.rds')
 }
 
+## ####################################################
+makeIntegratedLarvalObject = function()
+{
+    day2 = readRDS('unintegrated/2dpf_qc.rds')
+    day3 = readRDS('unintegrated/3dpf_qc.rds')
 
+    day2 = NormalizeData(day2)
+    day2 = FindVariableFeatures(day2)
+
+    day3 = NormalizeData(day3)
+    day3 = FindVariableFeatures(day3)
+
+    anchors = FindIntegrationAnchors(list(day2,day3))
+    larval = IntegrateData(anchors)
+
+    larval = runBasicAnalyses(larval)  
+
+    saveRDS(larval,
+            'intermediate/larval_integrated.rds')
+}

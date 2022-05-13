@@ -4,6 +4,7 @@ library(HandyPack)
 library(ggplot2)
 library(plotly)
 library(stringr)
+library(Polychrome)
 
 rm(list=ls())
 graphics.off()
@@ -14,6 +15,61 @@ source('IntegrationWare.R')
 ## ####################################################
 
 saveDir = nameAndMakeDir('larvalQCFigures')
+
+larval = readRDS('intermediate/larval_integrated_CellType.rds')
+types = unique(larval$CellType)
+types = types[order(types)]
+
+df = FetchData(larval,c('UMAP_1','UMAP_2','CellType','orig.ident'))
+
+## New integrated orig.ident:
+N = length(unique(df$orig.ident))
+colors = polychrome(N)
+kOrig = ggplot(df,aes(x=UMAP_1,y=UMAP_2,color=orig.ident)) +
+    geom_point() +
+    scale_color_manual(values=colors) +
+    ggtitle('Integrated Larval data showing data set')
+
+print(kOrig)
+rOrig = ggplotly(kOrig)
+print(rOrig)
+
+fileName = paste0(saveDir,
+                  '/larval_integrated_orig.ident.jpg')
+ggsave(plot=kOrig,
+       filename=fileName)
+fileName = str_replace(fileName,'jpg','html')
+htmlwidgets::saveWidget(as_widget(rOrig), fileName)
+
+## New integrated CellType:
+NType = length(unique(df$CellType))
+typeColors = polychrome(NType)
+
+kType = ggplot(df,aes(x=UMAP_1,y=UMAP_2,color=CellType,label=orig.ident)) +
+    geom_point() +
+    scale_color_manual(values=typeColors) +
+    ggtitle('Integrated Larval data showing CellType')
+
+dev.new()
+print(kType)
+rType = ggplotly(kType,tooltips=c('CellType','orig.ident'))
+print(rType)
+
+
+fileName = paste0(saveDir,
+                  '/larval_integrated_CellType.jpg')
+ggsave(plot=kType,
+       filename=fileName,
+       width=20,height=12,units='in')
+fileName = str_replace(fileName,'jpg','html')
+htmlwidgets::saveWidget(as_widget(rType), fileName)
+
+
+
+
+## ####################################################
+## ####################################################
+stop('already did this')
 
 larval = readRDS('intermediate/larval_CellType.rds')
 oldLarval = getOld('larval')

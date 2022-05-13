@@ -5,11 +5,8 @@ library(HandyPack)
 ## ####################################################
 getSeuratObject = function(which)
 {
-    fileName = paste0('SeuratObject/',
-                      which,
-                      '.rds')
-    f = readRDS(fileName)
-
+    stop('not there yet')
+    
     return(f)
 }
 

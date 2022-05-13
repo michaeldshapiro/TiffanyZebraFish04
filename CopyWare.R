@@ -102,3 +102,21 @@ copyCellTypeIntoNewLarval = function()
             'intermediate/larval_CellType.rds')
 }
 
+## ####################################################
+copyCellTypeIntoNewIntegratedLarval = function()
+{
+    larval = readRDS('intermediate/larval_integrated.rds')
+    oldLarval = getOld('larval')
+
+    larval = tagCells(larval)
+    oldLarval = tagCells(oldLarval)
+
+    dictionary = oldLarval$CellType
+    names(dictionary) = oldLarval$tag
+
+    larval$CellType = dictionary[larval$tag]
+    larval$CellType[is.na(larval$CellType)]  = '*'
+    
+    saveRDS(larval,
+            'intermediate/larval_integrated_CellType.rds')
+}
