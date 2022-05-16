@@ -295,3 +295,20 @@ makeIntegratedLarvalObject = function()
     saveRDS(larval,
             'intermediate/larval_integrated.rds')
 }
+
+## ####################################################
+makeAdultObject = function()
+{
+    adult19 = readRDS('unintegrated/adult19_qc.rds')
+    adult20 = readRDS('unintegrated/adult20_qc.rds')
+
+    adult = merge(adult19,y=adult20,
+                   project='audlt')
+
+    adult = NormalizeData(adult)
+    adult = runBasicAnalyses(adult)
+
+    saveDir = nameAndMakeDir('intermediate')
+    saveRDS(adult,'intermediate/adult.rds')
+}
+
