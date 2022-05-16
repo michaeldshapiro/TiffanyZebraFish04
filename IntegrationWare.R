@@ -312,3 +312,23 @@ makeAdultObject = function()
     saveRDS(adult,'intermediate/adult.rds')
 }
 
+## ####################################################
+makeCombinedObject = function()
+{
+    adult = readRDS('intermediate/adult_CellType.rds')
+    
+    larval = readRDS('intermediate/larval_CellType.rds')
+    keepCellTypes = Read.Table('keepCellTypes.txt')
+    idx = keepCellTypes$Keep == 'Y'
+    keepCellTypes = keepCellTypes$CellType[idx]
+
+    idx = larval$CellType %in% keepCellTypes
+    larval = larval[,idx]
+
+    anchors = FindIntegrationAnchors(list(adult,larval))
+    combined = IntegrateData(anchors)
+
+    combined = runBasicAnalyses(combined)  
+
+    saveRDS(combined,'intermediate/combined.rds')
+}
