@@ -2,6 +2,7 @@
 library(Seurat)
 library(ggplot2)
 library(HandyPack)
+library(tictoc)
 library(stringr)
 library(plotly)
 
@@ -72,4 +73,42 @@ for(res in resolutions)
 
     fileName = str_replace(fileName,'jpg','html')
     htmlwidgets::saveWidget(as_widget(q), fileName)
+
+    saveDir = c('clusterCombined',
+                paste0('combined_',res),
+                'markerGenes')
+    saveDir = nameAndMakeDir(saveDir)
+
+    
+    clusters = unique(f$seurat_clusters)
+    
+    for(cluster in clusters)
+    {
+        Tic(paste(res,cluster))
+        
+        groupMarkerDF = FindMarkers(f,
+                                    assay=f@active.assay,
+                                    only.pos=TRUE,
+                                    group.by=f$seurat_clusters,
+                                    ident.1=cluster)
+        groupMarkerDF = cbind(data.frame(gene=rownames(groupMarkerDF),
+                                         stringsAsFactors=FALSE),
+                              groupMarkerDF)
+        
+        cutoff = 0.05
+        idx = groupMarkerDF$p_val_adj <= cutoff
+        groupMarkerDF = groupMarkerDF[idx,]
+        
+        if(nrow(groupMarkerDF) == 0)
+            next
+        
+        fileName = paste0(saveDir,
+                          '/markerGenes_',
+                          cluster,
+                          '.txt')
+        
+        Write.Table(groupMarkerDF,
+                    fileName)
+        toc()
+    }
 }
