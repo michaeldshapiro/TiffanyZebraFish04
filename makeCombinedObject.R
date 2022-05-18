@@ -13,7 +13,7 @@ for(integratedLarval in c(TRUE,FALSE))
     for(whichKeep in 1:2)
     {
         writeLines(paste('integratedLaraval',integratedLarval,whichKeep))
-        makeCombinedObject(integratedLarval,whichKeep)
+        makeCombinedObject(integratedLarval,whichKeep,whichAdult=20)
     }
 
 

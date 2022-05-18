@@ -314,22 +314,33 @@ makeAdultObject = function()
 
 ## ####################################################
 makeCombinedObject = function(integratedLarval,
-                              whichKeep)
+                              whichKeep,
+                              whichAdult='both')
 {
     adult = readRDS('intermediate/adult_CellType.rds')
 
+    if(whichAdult == 20)
+    {
+        idx = adult$orig.ident == 'adult19'
+        adult = adult[,idx]
+    }
+
     if(integratedLarval)
+    {
         larval = readRDS('intermediate/larval_integrated_CellType.rds')
-    else
+    } else {
         larval = readRDS('intermediate/larval_CellType.rds')
+    }
 
     
-    keepCellTypes = Read.Table('keepCellTypes.txt')
+    keepCellTypesDF = Read.Table('keepCellTypes.txt')
     if(whichKeep == 1)
-        idx = keepCellTypes$Keep == 'Y'
-    else
-        idx = keepCellTypes$Keep2 == 'Y'
-    keepCellTypes = keepCellTypes$CellType[idx]
+    {
+        idx = keepCellTypesDF$Keep == 'Y'
+    } else {
+        idx = keepCellTypesDF$Keep2 == 'Y'
+    }
+    keepCellTypes = keepCellTypesDF$CellType[idx]
 
     idx = larval$CellType %in% keepCellTypes
     larval = larval[,idx]
@@ -353,6 +364,13 @@ makeCombinedObject = function(integratedLarval,
                       lTag,
                       kTag,
                       '.rds')
+
+    if(whichAdult==20)
+            fileName = paste0('intermediate/combined',
+                      lTag,
+                      kTag,
+                      '_adult20.rds')
+
 
     saveRDS(combined,fileName)
 }

@@ -17,6 +17,8 @@ source('IntegrationWare.R')
 saveDir = nameAndMakeDir('combinedQCFigures')
 
 filesIn = Sys.glob('intermediate/combined*rds')
+idx = str_detect(filesIn,'adult')
+filesIn = filesIn[idx]
 
 for(file in filesIn)
 {
