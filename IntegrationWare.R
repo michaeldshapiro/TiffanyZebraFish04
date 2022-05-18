@@ -313,13 +313,22 @@ makeAdultObject = function()
 }
 
 ## ####################################################
-makeCombinedObject = function()
+makeCombinedObject = function(integratedLarval,
+                              whichKeep)
 {
     adult = readRDS('intermediate/adult_CellType.rds')
+
+    if(integratedLarval)
+        larval = readRDS('intermediate/larval_integrated_CellType.rds')
+    else
+        larval = readRDS('intermediate/larval_CellType.rds')
+
     
-    larval = readRDS('intermediate/larval_CellType.rds')
     keepCellTypes = Read.Table('keepCellTypes.txt')
-    idx = keepCellTypes$Keep == 'Y'
+    if(whichKeep == 1)
+        idx = keepCellTypes$Keep == 'Y'
+    else
+        idx = keepCellTypes$Keep2 == 'Y'
     keepCellTypes = keepCellTypes$CellType[idx]
 
     idx = larval$CellType %in% keepCellTypes
@@ -330,5 +339,20 @@ makeCombinedObject = function()
 
     combined = runBasicAnalyses(combined)  
 
-    saveRDS(combined,'intermediate/combined.rds')
+    if(integratedLarval)
+        lTag = '_integratedLarval'
+    else
+        lTag = '_mergedLarval'
+
+    if(whichKeep == 1)
+        kTag = '_keepCells1'
+    else
+        kTag = '_keepCells2'
+
+    fileName = paste0('intermediate/combined',
+                      lTag,
+                      kTag,
+                      '.rds')
+
+    saveRDS(combined,fileName)
 }
