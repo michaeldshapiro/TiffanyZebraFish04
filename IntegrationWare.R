@@ -321,7 +321,7 @@ makeCombinedObject = function(integratedLarval,
 
     if(whichAdult == 20)
     {
-        idx = adult$orig.ident == 'adult19'
+        idx = adult$orig.ident == 'adult20'
         adult = adult[,idx]
     }
 
