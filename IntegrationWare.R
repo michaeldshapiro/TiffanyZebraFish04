@@ -324,7 +324,7 @@ makeCombinedObject = function(integratedLarval,
         idx = adult$orig.ident == 'adult20'
         adult = adult[,idx]
     }
-
+    
     if(integratedLarval)
     {
         larval = readRDS('intermediate/larval_integrated_CellType.rds')
@@ -365,12 +365,62 @@ makeCombinedObject = function(integratedLarval,
                       kTag,
                       '.rds')
 
-    if(whichAdult==20)
-            fileName = paste0('intermediate/combined',
+    if(whichAdult == 20)
+        fileName = paste0('intermediate/combined',
+                          lTag,
+                          kTag,
+                          '_adult20.rds')
+    
+    saveRDS(combined,fileName)
+}
+
+## ####################################################
+makeCombinedObjectAdult20Only = function(integratedLarval,
+                                         whichKeep)
+{
+    ## Get the adult object:
+    adult = readRDS('unintegrated/adult20_CellType.rds')
+
+    ## Get the larval object:
+    if(integratedLarval)
+    {
+        larval = readRDS('intermediate/larval_integrated_CellType.rds')
+    } else {
+        larval = readRDS('intermediate/larval_CellType.rds')
+    }
+
+     ## Subset the larval object:   
+    keepCellTypesDF = Read.Table('keepCellTypes.txt')
+    if(whichKeep == 1)
+    {
+        idx = keepCellTypesDF$Keep == 'Y'
+    } else {
+        idx = keepCellTypesDF$Keep2 == 'Y'
+    }
+    keepCellTypes = keepCellTypesDF$CellType[idx]
+
+    idx = larval$CellType %in% keepCellTypes
+    larval = larval[,idx]
+
+    anchors = FindIntegrationAnchors(list(adult,larval))
+    combined = IntegrateData(anchors)
+
+    combined = runBasicAnalyses(combined)
+
+    if(integratedLarval)
+        lTag = '_integratedLarval'
+    else
+        lTag = '_mergedLarval'
+    
+    if(whichKeep == 1)
+        kTag = '_keepCells1'
+    else
+        kTag = '_keepCells2'
+
+    fileName = paste0('intermediate/combined',
                       lTag,
                       kTag,
-                      '_adult20.rds')
-
-
+                      '_adult20Only.rds')
+    
     saveRDS(combined,fileName)
 }

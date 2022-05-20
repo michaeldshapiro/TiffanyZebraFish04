@@ -141,3 +141,23 @@ copyCellTypeIntoNewAdult = function()
             'intermediate/adult_CellType.rds')
 }
 
+
+## ####################################################
+copyCellTypeIntoNewAdult20 = function()
+{
+    adult = readRDS('unintegrated/adult20_qc.rds')
+    oldAdult = getOld('adult')
+
+    adult = tagCells(adult)
+    oldAdult = tagCells(oldAdult)
+
+    dictionary = oldAdult$shortName
+    names(dictionary) = oldAdult$tag
+
+    adult$CellType = dictionary[adult$tag]
+    adult$CellType[is.na(adult$CellType)]  = '*'
+    
+    saveRDS(adult,
+            'unintegrated/adult20_CellType.rds')
+}
+
