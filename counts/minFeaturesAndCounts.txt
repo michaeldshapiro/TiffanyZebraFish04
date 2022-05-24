@@ -1,0 +1,4 @@
+version	minLarvalCount	minLarvalFeature	minAdultCount	minAdultFeature
+version_1	2484	563	1097	751
+version_2	2482	553	282	148
+version_4	2007	636	335	300
