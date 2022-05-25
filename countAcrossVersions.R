@@ -30,7 +30,7 @@ getCombined = function(which)
     if(which == 4)
     {
         fileName = paste0('~/TiffanyZebraFish04/intermediate/',
-                          'combined_integratedLarval_keepCells2.rds')
+                          'combined_integratedLarval_keepCells2_adult20.rds')
         f = readRDS(fileName)
         return(f)
     }
@@ -82,6 +82,8 @@ for(i in 1:3)
         
 df = data.frame(M)
 names(df) = idents
+
+stop('look and listen')
 
 saveDir = nameAndMakeDir('counts') 
 Write.Table(df,'counts/orig.identCounts.txt')

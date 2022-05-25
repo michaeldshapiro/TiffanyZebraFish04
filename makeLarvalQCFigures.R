@@ -69,7 +69,6 @@ htmlwidgets::saveWidget(as_widget(rType), fileName)
 
 ## ####################################################
 ## ####################################################
-stop('already did this')
 
 larval = readRDS('intermediate/larval_CellType.rds')
 oldLarval = getOld('larval')

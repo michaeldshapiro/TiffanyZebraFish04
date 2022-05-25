@@ -18,8 +18,11 @@ makeSeuratObjectsFrom10X = function()
     dataDirs = c('2dpf'='data/2dpf',
                  '3dpf'='data/3dpf',
                  adult19='data/adult/191217',
-                 adult20='data/adult/200108')
+                 adult20='data/adult/200108',
+                 adultTogether='data/adult/together',
+                 stefan20='data/adult/stefan200108')
 
+    dataDirs = dataDirs[1:4]
 
     outDir = nameAndMakeDir('unintegrated')
 
@@ -220,11 +223,11 @@ performQC = function()
     idx = str_detect(files,'qc')
     files = files[!idx]
 
-    mtCutoff = 10
+    mtCutoff = 6
 
-    writeLines(c('mt cutoff 10%',
-                 'adult feature cutoff 300',
-                 'others 600'),
+    writeLines(c('mt cutoff 6%',
+                 'adult feature cutoff 270',
+                 'others 500'),
                  'integrationTables/qc_cutoffs.txt')
 
     for(file in files)
@@ -232,9 +235,9 @@ performQC = function()
         obj = readRDS(file)
         tag = unique(obj$orig.ident)
         if(str_detect(tag,'adult'))
-            featureCutoff = 300
+            featureCutoff = 270
         else
-            featureCutoff = 600
+            featureCutoff = 500
 
         idx = obj$percent.mt <= mtCutoff &
             obj$nFeature_RNA >= featureCutoff

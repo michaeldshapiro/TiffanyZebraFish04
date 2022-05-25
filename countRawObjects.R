@@ -7,8 +7,8 @@ library(stringr)
 rm(list=ls())
 graphics.off()
 
-## ####################################################
-## ####################################################
+####################################################
+####################################################
 getObject = function(version,whichOne)
 {
     fileList = getFiles()
@@ -20,6 +20,8 @@ getObject = function(version,whichOne)
         if(is.null(f))
             return(f)
     } else {
+        if(is.na(fileList[[version]][whichOne]))
+            return(NULL)
         f = readRDS(fileList[[version]][whichOne])
     }
 
@@ -35,7 +37,7 @@ getObject = function(version,whichOne)
     return(f)
 }
 
-## ####################################################
+####################################################
 extractSubset = function(f,whichOne)
 {
     if(whichOne == 'adult19')
@@ -51,37 +53,38 @@ extractSubset = function(f,whichOne)
     return(fThis)    
 }
 
-## ####################################################
+####################################################
 getFiles = function()
 {
     files = list()
 
-    ## version 1 is spurious:
+    version 1 is spurious:
     files[[1]] = paste0('~/TiffanyZebraFish/',
                         'SC18139_and_GSE_152906/data/provisional.rds')
-    ## version 2:
+    version 2:
     files[[2]] = c(adult19='~/TiffanyZebraFish02/Integration01/unintegrated/adult191217.rds',
                    adult20='~/TiffanyZebraFish02/Integration01/unintegrated/adult200108.rds',
                    '2dpf'='~/TiffanyZebraFish02/Integration01/unintegrated/larval48.rds',
                    '3dpf'='~/TiffanyZebraFish02/Integration01/unintegrated/larval68.rds')
 
-    ## version 3:
+    version 3:
     files[[3]] = c(adult19='~/TiffanyZebraFish03/Integration/unintegrated/adult19.rds',
                    adult20='~/TiffanyZebraFish03/Integration/unintegrated/adult20.rds',
                    '2dpf'='~/TiffanyZebraFish03/Integration/unintegrated/2dpf.rds',
                    '3dpf'='~/TiffanyZebraFish03/Integration/unintegrated/3dpf.rds')
 
-    ## version 4:
+    version 4:
     files[[4]] = c(adult19='~/TiffanyZebraFish04/unintegrated/adult19.rds',
                    adult20='~/TiffanyZebraFish04/unintegrated/adult20.rds',
                    '2dpf'='~/TiffanyZebraFish04/unintegrated/2dpf.rds',
-                   '3dpf'='~/TiffanyZebraFish04/unintegrated/3dpf.rds')
+                   '3dpf'='~/TiffanyZebraFish04/unintegrated/3dpf.rds',
+                   adultTogether='~/TiffanyZebraFish04/unintegrated/adultTogether.rds')
 
     return(files)
 }
 
-## ####################################################
-## ####################################################
+####################################################
+####################################################
 idents = c('2dpf','3dpf','adult19','adult20')
 versions = 1:4
 
