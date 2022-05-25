@@ -7,14 +7,6 @@ source('IntegrationWare.R')
 source('CopyWare.R')
 ## ####################################################
 ## ####################################################
-Source = function(x)
-{
-    source(x)
-
-    ## Make sure these aren't over-written:
-    source('IntegrationWare.R')
-    source('CopyWare.R')
-}
     
 makeSeuratObjectFrom10X()
 
@@ -32,7 +24,7 @@ copyCellTypeIntoNewLarval()
 
 copyCellTypeIntoNewIntegratedLarval()
 
-Source('makeLarvalQCFigures.R')
+source('makeLarvalQCFigures.R')
 
 makeAdultObject()
 
@@ -40,6 +32,12 @@ copyCellTypeIntoNewAdult()
 
 copyCellTypeIntoNewAdult20()
 
-Source('makeAdultQCFigures.R')
+source('makeAdultQCFigures.R')
 
+source('makeCombinedObject.R')
 
+source('makeCombinedObjectAdult20Only.R')
+
+source('makeCombinedQCFigures.R')
+
+source('makeCombinedQCFiguresAdult20Only.R')
