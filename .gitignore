@@ -3,5 +3,6 @@ basement/
 data/
 SeuratObject/
 intermediate/
+intermediateCopyQC/
 unintegrated/
 clusterCombined/*/*rds
