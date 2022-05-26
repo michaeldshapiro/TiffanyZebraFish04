@@ -1,6 +1,0 @@
-
-camp/apps/misc/stp/babs/manual/software/c/cellranger-3.0.2/cellranger-cs/3.0.2/bin/count
-–id=HEA614A1
-–transcriptome=/camp/svc/reference/Genomics/10x/10x_transcriptomes/GRCz11-release-97_premrna/
-–fastqs=/camp/stp/babs/inputs/sequencing/fastq/191217_K00102_0438_BHFVGMBBXY/fastq/SC18139,/camp/stp/babs/inputs/sequencing/fastq/200108_K00371_0358_BHFVJTBBXY/fastq/SC18139
-–sample=HEA614A1
