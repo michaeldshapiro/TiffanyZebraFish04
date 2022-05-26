@@ -3,6 +3,7 @@ library(Seurat)
 library(HandyPack)
 library(plotly)
 library(ggplot2)
+library(stringr)
 
 rm(list=ls())
 graphics.off()
@@ -34,6 +35,8 @@ for(file in files)
         fileName = paste0('copyQCFigures/',
                           title,
                           '.jpg')
+        fileName = str_replace_all(fileName,' ','_')
+        
         ggsave(plot=g,
                filename=fileName,
                width=14,height=9,units='in')
